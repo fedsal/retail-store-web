@@ -158,7 +158,14 @@ fun ProductColumn(
                 onRemoveItem = onRemove
             )
             if (index != products.size - 1) {
-                Box(modifier.height(1.px).color(Colors.Black))
+                Box(modifier.height(1.px)
+                    .fillMaxWidth()
+                    .background(Colors.Black)
+                    .margin {
+                        bottom(20.px)
+                        top(10.px)
+                    }
+                )
             }
         }
     }

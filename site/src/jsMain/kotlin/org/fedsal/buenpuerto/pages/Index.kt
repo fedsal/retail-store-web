@@ -13,6 +13,8 @@ import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
 import com.varabyte.kobweb.core.Page
+import org.fedsal.buenpuerto.domain.model.Order
+import org.fedsal.buenpuerto.domain.model.OrderItem
 import org.fedsal.buenpuerto.domain.model.Product
 import org.fedsal.buenpuerto.sections.CheckoutSection
 import org.fedsal.buenpuerto.sections.FooterSection
@@ -28,8 +30,26 @@ fun HomePage() {
     val product = Product(
         code = "123",
         name = "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-        imagesUrl = listOf("https://example.com/image1.jpg", "https://example.com/image2.jpg"),
-        price = 2000.0
+        imagesUrl = listOf("https://http2.mlstatic.com/D_NQ_NP_2X_661732-MLA82942925465_032025-F.webp", "https://example.com/image2.jpg"),
+        price = 22000.0
+    )
+    val order = Order(
+        clientName = "Federico",
+        products = listOf(
+            OrderItem(
+                product = product,
+                quantity = 1
+            ),
+            OrderItem(
+                product = Product(
+                    code = "1234",
+                    name = "Cafetera expresso 200ml",
+                    imagesUrl = listOf("https://http2.mlstatic.com/D_NQ_NP_2X_661732-MLA82942925465_032025-F.webp"),
+                    price = 23500.0
+                ),
+                quantity = 1
+            )
+        )
     )
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -47,10 +67,10 @@ fun HomePage() {
             }
         }
         if (menuOpened) {
-            CheckoutSection(onMenuClosed = { menuOpened = false }, products = emptyList(),
-                onDecrement = {  },
-                onIncrement = {  },
-                onRemove = {  }
+            CheckoutSection(onMenuClosed = { menuOpened = false }, products = order.products,
+                onDecrement = { },
+                onIncrement = { },
+                onRemove = { }
             )
         }
     }
