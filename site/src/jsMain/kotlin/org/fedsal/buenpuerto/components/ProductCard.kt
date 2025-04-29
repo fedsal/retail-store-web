@@ -15,7 +15,6 @@ import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.background
 import com.varabyte.kobweb.compose.ui.modifiers.borderRadius
 import com.varabyte.kobweb.compose.ui.modifiers.color
-import com.varabyte.kobweb.compose.ui.modifiers.fillMaxHeight
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.fontFamily
@@ -37,8 +36,8 @@ import com.varabyte.kobweb.silk.components.text.SpanText
 import org.fedsal.buenpuerto.domain.model.OrderItem
 import org.fedsal.buenpuerto.utils.FONT_FAMILY
 import org.fedsal.buenpuerto.utils.Res
+import org.fedsal.buenpuerto.utils.formatDecimal
 import org.jetbrains.compose.web.css.Color
-import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 
 @Composable
@@ -86,7 +85,10 @@ fun ProductCard(
                 )
             }
             Spacer()
-            Row(Modifier.fillMaxWidth().margin { left(10.px) }, horizontalArrangement = Arrangement.Start) {
+            Row(
+                Modifier.fillMaxWidth().margin { left(10.px) },
+                horizontalArrangement = Arrangement.Start
+            ) {
                 CounterButton(
                     modifier = Modifier.width(110.px),
                     count = product.quantity,
@@ -100,9 +102,10 @@ fun ProductCard(
                         .fontSize(22.px)
                         .fontWeight(FontWeight.Bold)
                         .color(Colors.Black),
-                    text = "$ ${product.product.price * product.quantity}"
+                    text = "$ ${(product.product.price * product.quantity).formatDecimal()}"
                 )
             }
         }
     }
 }
+

@@ -14,6 +14,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.margin
 import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.toAttrs
 import org.fedsal.buenpuerto.utils.FONT_FAMILY
+import org.fedsal.buenpuerto.utils.formatDecimal
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.P
 import org.jetbrains.compose.web.dom.Text
@@ -31,7 +32,7 @@ fun ProductPriceSection(price: Double) {
                 .margin(0.px)
                 .toAttrs()
         ) {
-            Text("$ $price")
+            Text("$ ${price.formatDecimal()}")
         }
     }
 }
