@@ -29,4 +29,4 @@ gradle.settingsEvaluated {
 rootProject.name = "buenpuerto"
 
 include(":site")
-
+include(":shared")
