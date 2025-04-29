@@ -13,6 +13,8 @@ import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
 import com.varabyte.kobweb.core.Page
+import org.fedsal.buenpuerto.domain.model.Order
+import org.fedsal.buenpuerto.domain.model.OrderItem
 import org.fedsal.buenpuerto.domain.model.Product
 import org.fedsal.buenpuerto.sections.CheckoutSection
 import org.fedsal.buenpuerto.sections.FooterSection
@@ -27,7 +29,7 @@ fun HomePage() {
     var menuOpened by remember { mutableStateOf(false) }
     val product = Product(
         code = "123",
-        name = "Product Name",
+        name = "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
         imagesUrl = listOf("https://example.com/image1.jpg", "https://example.com/image2.jpg"),
         price = 2000.0
     )
@@ -42,11 +44,9 @@ fun HomePage() {
             ProductTitleSection(product.name)
             ProductPriceSection(product.price)
             Spacer()
-            FooterSection(
-                onDecrement = {  },
-                onIncrement = {  },
-                onAddToCart = {  }
-            )
+            FooterSection {
+                // TODO add to cart
+            }
         }
         if (menuOpened) {
             CheckoutSection(onMenuClosed = { menuOpened = false }, products = emptyList(),

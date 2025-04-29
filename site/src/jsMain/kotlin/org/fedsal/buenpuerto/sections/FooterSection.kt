@@ -20,9 +20,7 @@ import org.jetbrains.compose.web.css.px
 
 @Composable
 fun FooterSection(
-    onIncrement: () -> Unit =  {},
-    onDecrement: () -> Unit =  {},
-    onAddToCart: () -> Unit =  {},
+    onAddToCart: (quantity: Int) -> Unit =  {},
 ) {
     var quantity by remember { mutableStateOf(1) }
     Row(
@@ -32,10 +30,18 @@ fun FooterSection(
         CounterButton(
             modifier = Modifier.fillMaxHeight(),
             count = quantity,
-            onIncrement = onIncrement,
-            onDecrement = onDecrement
+            onIncrement = {
+                if (quantity < 1000) {
+                    quantity++
+                }
+            },
+            onDecrement = {
+                if (quantity > 1) {
+                    quantity--
+                }
+            }
         )
         Box(modifier = Modifier.width(8.px))
-        AddToCartButton(onAddToCart = onAddToCart)
+        AddToCartButton(onAddToCart = { onAddToCart(quantity) } )
     }
 }
