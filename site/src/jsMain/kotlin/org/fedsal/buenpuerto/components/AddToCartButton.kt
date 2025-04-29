@@ -19,7 +19,7 @@ import com.varabyte.kobweb.compose.ui.toAttrs
 import org.fedsal.buenpuerto.utils.FONT_FAMILY
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Button
-import org.jetbrains.compose.web.dom.P
+import org.jetbrains.compose.web.dom.Span
 import org.jetbrains.compose.web.dom.Text
 
 @Composable
@@ -37,7 +37,7 @@ fun AddToCartButton(
             .fillMaxWidth()
             .toAttrs()
     ) {
-        P(
+        Span(
             attrs = Modifier
                 .fillMaxWidth()
                 .fontFamily(FONT_FAMILY)

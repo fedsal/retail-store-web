@@ -10,6 +10,7 @@ import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
+import com.varabyte.kobweb.compose.ui.modifiers.height
 import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.modifiers.width
 import org.jetbrains.compose.web.css.px
@@ -18,7 +19,7 @@ import org.jetbrains.compose.web.css.px
 fun FooterSection() {
     var quantity by remember { mutableStateOf(1) }
     Row(
-        Modifier.padding(leftRight = 16.px, topBottom = 10.px).fillMaxWidth(),
+        Modifier.padding(leftRight = 16.px, topBottom = 10.px).fillMaxWidth().height(70.px),
         verticalAlignment = Alignment.CenterVertically
     ) {
         CounterButton(
