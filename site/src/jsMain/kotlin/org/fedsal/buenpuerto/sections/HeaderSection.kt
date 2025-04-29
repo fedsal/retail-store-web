@@ -1,4 +1,4 @@
-package org.fedsal.buenpuerto.components
+package org.fedsal.buenpuerto.sections
 
 import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -18,7 +18,7 @@ import org.fedsal.buenpuerto.utils.Res
 import org.jetbrains.compose.web.css.px
 
 @Composable
-fun Header(onBagClicked: () -> Unit = {}) {
+fun HeaderSection(onBagClicked: () -> Unit = {}) {
     Row(
         modifier = Modifier.fillMaxSize().height(65.px).background(Colors.Black).padding(10.px),
         verticalAlignment = Alignment.CenterVertically,

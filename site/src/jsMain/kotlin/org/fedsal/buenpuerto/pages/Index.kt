@@ -13,27 +13,34 @@ import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
 import com.varabyte.kobweb.core.Page
-import org.fedsal.buenpuerto.components.FooterSection
-import org.fedsal.buenpuerto.components.Header
-import org.fedsal.buenpuerto.components.ImageCarousel
+import org.fedsal.buenpuerto.domain.model.Product
 import org.fedsal.buenpuerto.sections.CheckoutSection
-import org.fedsal.buenpuerto.components.ProductPrice
-import org.fedsal.buenpuerto.components.ProductTitle
+import org.fedsal.buenpuerto.sections.FooterSection
+import org.fedsal.buenpuerto.sections.HeaderSection
+import org.fedsal.buenpuerto.sections.ImageCarouselSection
+import org.fedsal.buenpuerto.sections.ProductPriceSection
+import org.fedsal.buenpuerto.sections.ProductTitleSection
 
 @Page
 @Composable
 fun HomePage() {
     var menuOpened by remember { mutableStateOf(false) }
+    val product = Product(
+        code = "123",
+        name = "Product Name",
+        imagesUrl = listOf("https://example.com/image1.jpg", "https://example.com/image2.jpg"),
+        price = 2000.0
+    )
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Header(onBagClicked = { menuOpened = true })
-            ImageCarousel()
-            ProductTitle()
-            ProductPrice()
+            HeaderSection(onBagClicked = { menuOpened = true })
+            ImageCarouselSection(product.imagesUrl)
+            ProductTitleSection(product.name)
+            ProductPriceSection(product.price)
             Spacer()
             FooterSection(
                 onDecrement = {  },

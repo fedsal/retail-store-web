@@ -1,4 +1,4 @@
-package org.fedsal.buenpuerto.components
+package org.fedsal.buenpuerto.sections
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,6 +14,8 @@ import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.height
 import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.modifiers.width
+import org.fedsal.buenpuerto.components.AddToCartButton
+import org.fedsal.buenpuerto.components.CounterButton
 import org.jetbrains.compose.web.css.px
 
 @Composable
@@ -30,13 +32,10 @@ fun FooterSection(
         CounterButton(
             modifier = Modifier.fillMaxHeight(),
             count = quantity,
-            onIncrement = { quantity++ },
-            onDecrement = {
-                if (quantity > 1) quantity--
-                else quantity = 1
-            }
+            onIncrement = onIncrement,
+            onDecrement = onDecrement
         )
         Box(modifier = Modifier.width(8.px))
-        AddToCartButton()
+        AddToCartButton(onAddToCart = onAddToCart)
     }
 }

@@ -15,6 +15,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.fontFamily
 import com.varabyte.kobweb.compose.ui.modifiers.fontSize
 import com.varabyte.kobweb.compose.ui.modifiers.fontWeight
+import com.varabyte.kobweb.compose.ui.modifiers.onClick
 import com.varabyte.kobweb.compose.ui.toAttrs
 import org.fedsal.buenpuerto.utils.FONT_FAMILY
 import org.jetbrains.compose.web.css.px
@@ -25,7 +26,7 @@ import org.jetbrains.compose.web.dom.Text
 @Composable
 fun AddToCartButton(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
+    onAddToCart: () -> Unit,
 ) {
     Button(
         attrs = modifier
@@ -36,6 +37,7 @@ fun AddToCartButton(
             .color(Colors.White)
             .cursor(Cursor.Pointer)
             .fillMaxWidth()
+            .onClick { onAddToCart() }
             .toAttrs()
     ) {
         Span(
