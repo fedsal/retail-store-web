@@ -24,7 +24,8 @@ import org.jetbrains.compose.web.dom.Text
 
 @Composable
 fun AddToCartButton(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
 ) {
     Button(
         attrs = modifier

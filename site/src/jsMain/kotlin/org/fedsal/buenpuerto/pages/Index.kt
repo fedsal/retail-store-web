@@ -35,10 +35,18 @@ fun HomePage() {
             ProductTitle()
             ProductPrice()
             Spacer()
-            FooterSection()
+            FooterSection(
+                onDecrement = {  },
+                onIncrement = {  },
+                onAddToCart = {  }
+            )
         }
         if (menuOpened) {
-            CheckoutSection(onMenuClosed = { menuOpened = false })
+            CheckoutSection(onMenuClosed = { menuOpened = false }, products = emptyList(),
+                onDecrement = {  },
+                onIncrement = {  },
+                onRemove = {  }
+            )
         }
     }
 }

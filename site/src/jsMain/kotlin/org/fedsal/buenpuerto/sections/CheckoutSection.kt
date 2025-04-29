@@ -11,6 +11,7 @@ import com.varabyte.kobweb.compose.css.Cursor
 import com.varabyte.kobweb.compose.css.ScrollBehavior
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
+import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
@@ -56,7 +57,10 @@ import org.jetbrains.compose.web.dom.Text
 @Composable
 fun CheckoutSection(
     onMenuClosed: () -> Unit,
-    products: List<OrderItem> = emptyList()
+    products: List<OrderItem> = emptyList(),
+    onIncrement: (OrderItem) -> Unit,
+    onDecrement: (OrderItem) -> Unit,
+    onRemove: (OrderItem) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val breakpoint = rememberBreakpoint()
@@ -67,17 +71,11 @@ fun CheckoutSection(
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .zIndex(2)
-            .opacity(opacity)
-            .backgroundColor(Colors.Red)
+        modifier = Modifier.fillMaxSize().zIndex(2).opacity(opacity).backgroundColor(Colors.Red)
             .transition(Transition.of(property = "opacity", duration = 500.ms))
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .scrollBehavior(ScrollBehavior.Smooth)
+            modifier = Modifier.fillMaxSize().scrollBehavior(ScrollBehavior.Smooth)
                 .backgroundColor(Colors.White)
         ) {
             Row(
@@ -85,25 +83,15 @@ fun CheckoutSection(
                     .background(Colors.Black).fillMaxWidth().height(70.px),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                FaXmark(
-                    modifier = Modifier
-                        .cursor(Cursor.Pointer)
-                        .margin(right = 20.px)
-                        .onClick {
-                            scope.launch {
-                                opacity = 0.percent
-                                delay(500)
-                                onMenuClosed()
-                            }
-                        }
-                        .color(Colors.White),
-                    size = IconSize.XL
-                )
+                FaXmark(modifier = Modifier.cursor(Cursor.Pointer).margin(right = 20.px).onClick {
+                    scope.launch {
+                        opacity = 0.percent
+                        delay(500)
+                        onMenuClosed()
+                    }
+                }.color(Colors.White), size = IconSize.XL)
                 Span(
-                    attrs = Modifier
-                        .fontFamily(FONT_FAMILY)
-                        .fontSize(20.px)
-                        .color(Colors.White)
+                    attrs = Modifier.fontFamily(FONT_FAMILY).fontSize(20.px).color(Colors.White)
                         .toAttrs()
                 ) { Text("Carrito de compras") }
             }
@@ -113,7 +101,10 @@ fun CheckoutSection(
                 } else {
                     ProductColumn(
                         modifier = Modifier.fillMaxWidth(),
-                        products = products
+                        products = products,
+                        onIncrement,
+                        onDecrement,
+                        onRemove
                     )
                 }
             }
@@ -126,21 +117,14 @@ fun EmptyProducts(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier
-            .padding(10.px)
-            .borderRadius(10.px)
+        modifier = modifier.padding(10.px).borderRadius(10.px)
             .border(1.px, color = Color("#328FFF"), style = LineStyle.Solid),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
         Image(src = Res.Icons.INFO_CIRCLE_ICON)
-        Span(
-            attrs = Modifier
-                .fontFamily(FONT_FAMILY)
-                .color(Color("#328FFF"))
-                .fontSize(18.px)
-                .margin { left(10.px) }
-                .toAttrs()
+        Span(attrs = Modifier.fontFamily(FONT_FAMILY).color(Color("#328FFF")).fontSize(18.px)
+            .margin { left(10.px) }.toAttrs()
         ) {
             Text("El carrito esta vacio")
         }
@@ -150,15 +134,25 @@ fun EmptyProducts(
 @Composable
 fun ProductColumn(
     modifier: Modifier = Modifier,
-    products: List<OrderItem>
+    products: List<OrderItem>,
+    onIncrement: (OrderItem) -> Unit,
+    onDecrement: (OrderItem) -> Unit,
+    onRemove: (OrderItem) -> Unit
 ) {
     Column(modifier) {
-        products.forEach { product ->
+        products.forEachIndexed { index, product ->
             ProductCard(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                product = product
+                modifier = Modifier.fillMaxWidth(),
+                product = product,
+                onIncrement = onIncrement,
+                onDecrement = onDecrement,
+                onRemoveItem = onRemove
             )
+            if (index != products.size - 1) {
+                Box(
+                    modifier.height(1.px).color(Colors.Black)
+                ) { }
+            }
         }
     }
 }

@@ -17,7 +17,11 @@ import com.varabyte.kobweb.compose.ui.modifiers.width
 import org.jetbrains.compose.web.css.px
 
 @Composable
-fun FooterSection() {
+fun FooterSection(
+    onIncrement: () -> Unit =  {},
+    onDecrement: () -> Unit =  {},
+    onAddToCart: () -> Unit =  {},
+) {
     var quantity by remember { mutableStateOf(1) }
     Row(
         Modifier.padding(leftRight = 16.px, topBottom = 10.px).fillMaxWidth().height(70.px),
