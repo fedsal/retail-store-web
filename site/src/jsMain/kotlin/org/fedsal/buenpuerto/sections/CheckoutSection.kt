@@ -28,17 +28,19 @@ import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.fontFamily
 import com.varabyte.kobweb.compose.ui.modifiers.fontSize
 import com.varabyte.kobweb.compose.ui.modifiers.height
+import com.varabyte.kobweb.compose.ui.modifiers.lineHeight
 import com.varabyte.kobweb.compose.ui.modifiers.margin
+import com.varabyte.kobweb.compose.ui.modifiers.maxHeight
 import com.varabyte.kobweb.compose.ui.modifiers.onClick
 import com.varabyte.kobweb.compose.ui.modifiers.opacity
 import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.modifiers.scrollBehavior
 import com.varabyte.kobweb.compose.ui.modifiers.transition
 import com.varabyte.kobweb.compose.ui.modifiers.zIndex
-import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.components.icons.fa.FaXmark
 import com.varabyte.kobweb.silk.components.icons.fa.IconSize
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -51,8 +53,6 @@ import org.jetbrains.compose.web.css.LineStyle
 import org.jetbrains.compose.web.css.ms
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
-import org.jetbrains.compose.web.dom.Span
-import org.jetbrains.compose.web.dom.Text
 
 @Composable
 fun CheckoutSection(
@@ -90,10 +90,10 @@ fun CheckoutSection(
                         onMenuClosed()
                     }
                 }.color(Colors.White), size = IconSize.XL)
-                Span(
-                    attrs = Modifier.fontFamily(FONT_FAMILY).fontSize(20.px).color(Colors.White)
-                        .toAttrs()
-                ) { Text("Carrito de compras") }
+                SpanText(
+                    modifier = Modifier.fontFamily(FONT_FAMILY).fontSize(20.px).color(Colors.White),
+                    text = "Carrito de compras"
+                )
             }
             Column(modifier = Modifier.fillMaxSize().padding(20.px)) {
                 if (products.isEmpty()) {
@@ -117,17 +117,26 @@ fun EmptyProducts(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.padding(10.px).borderRadius(10.px)
-            .border(1.px, color = Color("#328FFF"), style = LineStyle.Solid),
+        modifier = modifier
+            .padding(10.px)
+            .borderRadius(10.px)
+            .border(
+                width = 1.px,
+                color = Color(Res.Colors.HINT_COLOR),
+                style = LineStyle.Solid
+            ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
         Image(src = Res.Icons.INFO_CIRCLE_ICON)
-        Span(attrs = Modifier.fontFamily(FONT_FAMILY).color(Color("#328FFF")).fontSize(18.px)
-            .margin { left(10.px) }.toAttrs()
-        ) {
-            Text("El carrito esta vacio")
-        }
+        SpanText(
+            modifier = Modifier.fontFamily(FONT_FAMILY).color(Color(Res.Colors.HINT_COLOR))
+                .fontSize(18.px)
+                .lineHeight(20.px)
+                .maxHeight(40.px)
+                .margin { left(10.px) },
+            text = "El carrito esta vacio"
+        )
     }
 }
 
@@ -149,9 +158,7 @@ fun ProductColumn(
                 onRemoveItem = onRemove
             )
             if (index != products.size - 1) {
-                Box(
-                    modifier.height(1.px).color(Colors.Black)
-                ) { }
+                Box(modifier.height(1.px).color(Colors.Black))
             }
         }
     }

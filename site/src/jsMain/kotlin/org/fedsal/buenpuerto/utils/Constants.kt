@@ -16,5 +16,6 @@ object Res {
 
     object Colors {
         const val IMAGE_BACKGROUND = "#dedede"
+        const val HINT_COLOR = "#328FFF"
     }
 }

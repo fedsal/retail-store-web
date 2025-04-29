@@ -1,6 +1,7 @@
 package org.fedsal.buenpuerto.components
 
 import androidx.compose.runtime.Composable
+import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.ObjectFit
 import com.varabyte.kobweb.compose.css.TextOverflow
 import com.varabyte.kobweb.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.color
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxHeight
 import com.varabyte.kobweb.compose.ui.modifiers.fontFamily
 import com.varabyte.kobweb.compose.ui.modifiers.fontSize
+import com.varabyte.kobweb.compose.ui.modifiers.fontWeight
 import com.varabyte.kobweb.compose.ui.modifiers.height
 import com.varabyte.kobweb.compose.ui.modifiers.margin
 import com.varabyte.kobweb.compose.ui.modifiers.maxHeight
@@ -22,17 +24,15 @@ import com.varabyte.kobweb.compose.ui.modifiers.objectFit
 import com.varabyte.kobweb.compose.ui.modifiers.onClick
 import com.varabyte.kobweb.compose.ui.modifiers.textOverflow
 import com.varabyte.kobweb.compose.ui.modifiers.width
-import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.components.icons.fa.FaTrashCan
 import com.varabyte.kobweb.silk.components.icons.fa.IconSize
+import com.varabyte.kobweb.silk.components.text.SpanText
 import org.fedsal.buenpuerto.domain.model.OrderItem
 import org.fedsal.buenpuerto.utils.FONT_FAMILY
 import org.fedsal.buenpuerto.utils.Res
 import org.jetbrains.compose.web.css.Color
 import org.jetbrains.compose.web.css.px
-import org.jetbrains.compose.web.dom.Span
-import org.jetbrains.compose.web.dom.Text
 
 @Composable
 fun ProductCard(
@@ -61,14 +61,14 @@ fun ProductCard(
         Column(
             modifier = Modifier.margin { left(10.px) }.fillMaxHeight()
         ) {
-            Span(
-                attrs = Modifier
+            SpanText(
+                modifier = Modifier
                     .fontFamily(FONT_FAMILY)
                     .fontSize(16.px)
                     .textOverflow(TextOverflow.Ellipsis)
-                    .maxHeight(30.px)
-                    .toAttrs()
-            ) { Text(product.product.name) }
+                    .maxHeight(30.px),
+                text = product.product.name,
+            )
             Spacer()
             CounterButton(
                 modifier = Modifier.width(110.px),
@@ -87,15 +87,14 @@ fun ProductCard(
                 modifier = Modifier.color(Colors.Black)
             )
             Spacer()
-            Span(
-                attrs = Modifier
+            SpanText(
+                modifier = Modifier
                     .fontFamily(FONT_FAMILY)
                     .fontSize(22.px)
-                    .color(Colors.Black)
-                    .toAttrs()
-            ) {
-                Text("$ ${product.product.price * product.quantity}")
-            }
+                    .fontWeight(FontWeight.Bold)
+                    .color(Colors.Black),
+                text = "$ ${product.product.price * product.quantity}"
+            )
         }
     }
 }

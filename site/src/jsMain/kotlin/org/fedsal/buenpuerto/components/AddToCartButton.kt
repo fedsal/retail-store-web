@@ -17,11 +17,10 @@ import com.varabyte.kobweb.compose.ui.modifiers.fontSize
 import com.varabyte.kobweb.compose.ui.modifiers.fontWeight
 import com.varabyte.kobweb.compose.ui.modifiers.onClick
 import com.varabyte.kobweb.compose.ui.toAttrs
+import com.varabyte.kobweb.silk.components.text.SpanText
 import org.fedsal.buenpuerto.utils.FONT_FAMILY
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Button
-import org.jetbrains.compose.web.dom.Span
-import org.jetbrains.compose.web.dom.Text
 
 @Composable
 fun AddToCartButton(
@@ -40,16 +39,14 @@ fun AddToCartButton(
             .onClick { onAddToCart() }
             .toAttrs()
     ) {
-        Span(
-            attrs = Modifier
+        SpanText(
+            modifier = Modifier
                 .fillMaxWidth()
                 .fontFamily(FONT_FAMILY)
                 .fontSize(16.px)
                 .fontWeight(FontWeight.Bold)
-                .color(Colors.White)
-                .toAttrs()
-        ) {
-            Text("Agregar al carrito".uppercase())
-        }
+                .color(Colors.White),
+            text = "Agregar al carrito".uppercase()
+        )
     }
 }

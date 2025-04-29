@@ -13,8 +13,6 @@ import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
 import com.varabyte.kobweb.core.Page
-import org.fedsal.buenpuerto.domain.model.Order
-import org.fedsal.buenpuerto.domain.model.OrderItem
 import org.fedsal.buenpuerto.domain.model.Product
 import org.fedsal.buenpuerto.sections.CheckoutSection
 import org.fedsal.buenpuerto.sections.FooterSection
