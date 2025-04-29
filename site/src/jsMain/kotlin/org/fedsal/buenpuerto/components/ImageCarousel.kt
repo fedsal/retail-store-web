@@ -29,7 +29,7 @@ fun ImageCarousel() {
         ),
         width = 100.percent,
         height = 300.px,
-        objectFit = ObjectFit.ScaleDown,
+        objectFit = ObjectFit.Cover,
         dark = true
     )
 }
