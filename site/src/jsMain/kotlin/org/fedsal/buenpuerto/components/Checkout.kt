@@ -41,6 +41,7 @@ import com.varabyte.kobweb.silk.components.icons.fa.IconSize
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.fedsal.buenpuerto.domain.model.Product
 import org.fedsal.buenpuerto.utils.FONT_FAMILY
 import org.fedsal.buenpuerto.utils.Res
 import org.jetbrains.compose.web.css.Color
@@ -52,9 +53,9 @@ import org.jetbrains.compose.web.dom.Span
 import org.jetbrains.compose.web.dom.Text
 
 @Composable
-fun OverflowMenu(
+fun Checkout(
     onMenuClosed: () -> Unit,
-    products: List<String> = emptyList()
+    products: List<Product> = emptyList()
 ) {
     val scope = rememberCoroutineScope()
     val breakpoint = rememberBreakpoint()
