@@ -10,7 +10,7 @@ import com.varabyte.kobweb.silk.components.graphics.Image
 import org.jetbrains.compose.web.css.px
 
 @Composable
-fun ProductImages() {
+fun ImageCarousel() {
     Image(
         src = "https://http2.mlstatic.com/D_NQ_NP_2X_661732-MLA82942925465_032025-F.webp",
         alt = "Product Image 1",

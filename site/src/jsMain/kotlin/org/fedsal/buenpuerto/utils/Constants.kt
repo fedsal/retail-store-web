@@ -1,10 +1,12 @@
 package org.fedsal.buenpuerto.utils
 
-val FONT_FAMILY = "Sans-serif"
+const val FONT_FAMILY = "Sans-serif"
 
 object Res {
     object Icons {
         const val SHOPPING_BAG = "shopping_bag_icon.svg"
+        const val REMOVE_ITEM = "remove_item_icon.svg"
+        const val ADD_ITEM = "add_item_icon.svg"
     }
 
     object Images {
