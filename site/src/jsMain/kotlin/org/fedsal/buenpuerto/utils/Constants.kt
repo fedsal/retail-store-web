@@ -13,4 +13,8 @@ object Res {
     object Images {
         const val LOGO = "favicon.ico"
     }
+
+    object Colors {
+        const val IMAGE_BACKGROUND = "#dedede"
+    }
 }

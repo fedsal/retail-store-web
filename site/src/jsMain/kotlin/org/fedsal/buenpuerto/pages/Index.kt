@@ -16,7 +16,7 @@ import com.varabyte.kobweb.core.Page
 import org.fedsal.buenpuerto.components.FooterSection
 import org.fedsal.buenpuerto.components.Header
 import org.fedsal.buenpuerto.components.ImageCarousel
-import org.fedsal.buenpuerto.components.Checkout
+import org.fedsal.buenpuerto.sections.CheckoutSection
 import org.fedsal.buenpuerto.components.ProductPrice
 import org.fedsal.buenpuerto.components.ProductTitle
 
@@ -38,7 +38,7 @@ fun HomePage() {
             FooterSection()
         }
         if (menuOpened) {
-            Checkout(onMenuClosed = { menuOpened = false })
+            CheckoutSection(onMenuClosed = { menuOpened = false })
         }
     }
 }

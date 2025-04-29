@@ -1,4 +1,4 @@
-package org.fedsal.buenpuerto.components
+package org.fedsal.buenpuerto.sections
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,7 +41,8 @@ import com.varabyte.kobweb.silk.components.icons.fa.IconSize
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.fedsal.buenpuerto.domain.model.Product
+import org.fedsal.buenpuerto.components.ProductCard
+import org.fedsal.buenpuerto.domain.model.OrderItem
 import org.fedsal.buenpuerto.utils.FONT_FAMILY
 import org.fedsal.buenpuerto.utils.Res
 import org.jetbrains.compose.web.css.Color
@@ -53,9 +54,9 @@ import org.jetbrains.compose.web.dom.Span
 import org.jetbrains.compose.web.dom.Text
 
 @Composable
-fun Checkout(
+fun CheckoutSection(
     onMenuClosed: () -> Unit,
-    products: List<Product> = emptyList()
+    products: List<OrderItem> = emptyList()
 ) {
     val scope = rememberCoroutineScope()
     val breakpoint = rememberBreakpoint()
@@ -109,6 +110,11 @@ fun Checkout(
             Column(modifier = Modifier.fillMaxSize().padding(20.px)) {
                 if (products.isEmpty()) {
                     EmptyProducts(modifier = Modifier.fillMaxWidth())
+                } else {
+                    ProductColumn(
+                        modifier = Modifier.fillMaxWidth(),
+                        products = products
+                    )
                 }
             }
         }
@@ -140,3 +146,20 @@ fun EmptyProducts(
         }
     }
 }
+
+@Composable
+fun ProductColumn(
+    modifier: Modifier = Modifier,
+    products: List<OrderItem>
+) {
+    Column(modifier) {
+        products.forEach { product ->
+            ProductCard(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                product = product
+            )
+        }
+    }
+}
+

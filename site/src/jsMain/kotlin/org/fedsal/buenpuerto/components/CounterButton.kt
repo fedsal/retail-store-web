@@ -1,6 +1,7 @@
 package org.fedsal.buenpuerto.components
 
 import androidx.compose.runtime.Composable
+import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
@@ -12,6 +13,8 @@ import com.varabyte.kobweb.compose.ui.modifiers.fillMaxHeight
 import com.varabyte.kobweb.compose.ui.modifiers.fontFamily
 import com.varabyte.kobweb.compose.ui.modifiers.fontSize
 import com.varabyte.kobweb.compose.ui.modifiers.margin
+import com.varabyte.kobweb.compose.ui.modifiers.minHeight
+import com.varabyte.kobweb.compose.ui.modifiers.minWidth
 import com.varabyte.kobweb.compose.ui.modifiers.onClick
 import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.modifiers.size
@@ -32,8 +35,9 @@ fun CounterButton(
     onDecrement: () -> Unit,
 ) {
     Row(
-        modifier = modifier.padding(leftRight = 12.px).borderRadius(10.px).border(2.px, style = LineStyle.Solid ,color = Colors.Black).fillMaxHeight(),
+        modifier = modifier.padding(leftRight = 12.px).borderRadius(10.px).border(2.px, style = LineStyle.Solid ,color = Colors.Black).minHeight(35.px).minWidth(100.px),
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
         Image(
             modifier = Modifier.onClick { onDecrement() }.margin { right(10.px) }.size(24.px).color(Colors.Black),

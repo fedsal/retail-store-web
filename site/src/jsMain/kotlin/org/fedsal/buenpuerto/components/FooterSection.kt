@@ -9,6 +9,7 @@ import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.modifiers.fillMaxHeight
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.height
 import com.varabyte.kobweb.compose.ui.modifiers.padding
@@ -23,6 +24,7 @@ fun FooterSection() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         CounterButton(
+            modifier = Modifier.fillMaxHeight(),
             count = quantity,
             onIncrement = { quantity++ },
             onDecrement = {
