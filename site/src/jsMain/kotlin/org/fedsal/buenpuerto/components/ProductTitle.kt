@@ -23,7 +23,7 @@ import org.jetbrains.compose.web.dom.Text
 @Composable
 fun ProductTitle() {
     Box(
-        Modifier.padding(leftRight = 16.px).height(60.px).fillMaxWidth(),
+        Modifier.padding(leftRight = 16.px).margin(top = 10.px).height(60.px).fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
         P(

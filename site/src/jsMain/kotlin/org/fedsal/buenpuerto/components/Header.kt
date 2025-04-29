@@ -10,6 +10,7 @@ import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.background
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
 import com.varabyte.kobweb.compose.ui.modifiers.height
+import com.varabyte.kobweb.compose.ui.modifiers.onClick
 import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.modifiers.size
 import com.varabyte.kobweb.silk.components.graphics.Image
@@ -17,7 +18,7 @@ import org.fedsal.buenpuerto.utils.Res
 import org.jetbrains.compose.web.css.px
 
 @Composable
-fun Header() {
+fun Header(onBagClicked: () -> Unit = {}) {
     Row(
         modifier = Modifier.fillMaxSize().height(65.px).background(Colors.Black).padding(10.px),
         verticalAlignment = Alignment.CenterVertically,
@@ -29,7 +30,7 @@ fun Header() {
         )
         Spacer()
         Image(
-            modifier = Modifier.size(30.px),
+            modifier = Modifier.size(30.px).onClick { onBagClicked() },
             src = Res.Icons.SHOPPING_BAG
         )
     }
