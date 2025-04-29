@@ -48,8 +48,9 @@ fun HomePage() {
                     price = 23500.0
                 ),
                 quantity = 1
-            )
-        )
+            ),
+        ),
+        total = 100.0
     )
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -67,10 +68,11 @@ fun HomePage() {
             }
         }
         if (menuOpened) {
-            CheckoutSection(onMenuClosed = { menuOpened = false }, products = order.products,
+            CheckoutSection(onMenuClosed = { menuOpened = false }, order = order,
                 onDecrement = { },
                 onIncrement = { },
-                onRemove = { }
+                onRemove = { },
+                onPlaceOrder = {  }
             )
         }
     }

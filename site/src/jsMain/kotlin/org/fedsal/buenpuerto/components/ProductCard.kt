@@ -66,7 +66,7 @@ fun ProductCard(
         Column(
             modifier = Modifier.margin { left(10.px) }.fillMaxSize()
         ) {
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
                 SpanText(
                     modifier = Modifier
                         .fontFamily(FONT_FAMILY)
@@ -81,7 +81,7 @@ fun ProductCard(
                 Spacer()
                 FaTrashCan(
                     size = IconSize.XL,
-                    modifier = Modifier.color(Colors.Black)
+                    modifier = Modifier.color(Colors.Black).margin { left(10.px) }
                 )
             }
             Spacer()

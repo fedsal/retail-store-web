@@ -8,12 +8,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.varabyte.kobweb.compose.css.Cursor
+import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.ScrollBehavior
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
+import com.varabyte.kobweb.compose.foundation.layout.Spacer
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
@@ -27,6 +29,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
 import com.varabyte.kobweb.compose.ui.modifiers.fontFamily
 import com.varabyte.kobweb.compose.ui.modifiers.fontSize
+import com.varabyte.kobweb.compose.ui.modifiers.fontWeight
 import com.varabyte.kobweb.compose.ui.modifiers.height
 import com.varabyte.kobweb.compose.ui.modifiers.lineHeight
 import com.varabyte.kobweb.compose.ui.modifiers.margin
@@ -37,6 +40,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.modifiers.scrollBehavior
 import com.varabyte.kobweb.compose.ui.modifiers.transition
 import com.varabyte.kobweb.compose.ui.modifiers.zIndex
+import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.components.icons.fa.FaXmark
 import com.varabyte.kobweb.silk.components.icons.fa.IconSize
@@ -45,23 +49,28 @@ import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.fedsal.buenpuerto.components.ProductCard
+import org.fedsal.buenpuerto.domain.model.Order
 import org.fedsal.buenpuerto.domain.model.OrderItem
 import org.fedsal.buenpuerto.utils.FONT_FAMILY
 import org.fedsal.buenpuerto.utils.Res
+import org.fedsal.buenpuerto.utils.formatDecimal
 import org.jetbrains.compose.web.css.Color
 import org.jetbrains.compose.web.css.LineStyle
 import org.jetbrains.compose.web.css.ms
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
+import org.jetbrains.compose.web.dom.Button
 
 @Composable
 fun CheckoutSection(
     onMenuClosed: () -> Unit,
-    products: List<OrderItem> = emptyList(),
+    order: Order,
     onIncrement: (OrderItem) -> Unit,
     onDecrement: (OrderItem) -> Unit,
-    onRemove: (OrderItem) -> Unit
+    onRemove: (OrderItem) -> Unit,
+    onPlaceOrder: () -> Unit
 ) {
+    val products = order.products
     val scope = rememberCoroutineScope()
     val breakpoint = rememberBreakpoint()
     var opacity by remember { mutableStateOf(0.percent) }
@@ -105,6 +114,45 @@ fun CheckoutSection(
                         onIncrement,
                         onDecrement,
                         onRemove
+                    )
+                }
+                Spacer()
+                Row(
+                    Modifier.fillMaxWidth().margin { bottom(20.px) },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    SpanText(
+                        modifier = Modifier.fontSize(26.px).fontFamily(FONT_FAMILY)
+                            .fontWeight(FontWeight.Bold).color(Colors.Black),
+                        text = "Total:"
+                    )
+                    Spacer()
+                    SpanText(
+                        modifier = Modifier.fontSize(26.px).fontFamily(FONT_FAMILY)
+                            .color(Colors.Black),
+                        text = "$ ${order.total.formatDecimal()}"
+                    )
+                }
+                Button(
+                    attrs = Modifier
+                        .height(60.px)
+                        .border(width = 0.px)
+                        .borderRadius(r = 10.px)
+                        .backgroundColor(Colors.Black)
+                        .color(Colors.White)
+                        .cursor(Cursor.Pointer)
+                        .fillMaxWidth()
+                        .onClick { onPlaceOrder() }
+                        .toAttrs()
+                ) {
+                    SpanText(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fontFamily(FONT_FAMILY)
+                            .fontSize(16.px)
+                            .fontWeight(FontWeight.Bold)
+                            .color(Colors.White),
+                        text = "Enviar pedido".uppercase()
                     )
                 }
             }
@@ -162,8 +210,8 @@ fun ProductColumn(
                     .fillMaxWidth()
                     .background(Colors.Black)
                     .margin {
-                        bottom(20.px)
-                        top(10.px)
+                        bottom(30.px)
+                        top(20.px)
                     }
                 )
             }
