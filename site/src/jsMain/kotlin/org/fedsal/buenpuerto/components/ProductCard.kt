@@ -86,7 +86,10 @@ fun ProductCard(
             }
             Spacer()
             Row(
-                Modifier.fillMaxWidth().margin { left(10.px) },
+                Modifier.fillMaxWidth().margin {
+                    left(10.px)
+                    top(20.px)
+                },
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.Bottom
             ) {
