@@ -49,6 +49,31 @@ fun HomePage() {
                 ),
                 quantity = 1
             ),
+            OrderItem(
+                product = product,
+                quantity = 1
+            ),
+            OrderItem(
+                product = Product(
+                    code = "1234",
+                    name = "Cafetera expresso 200ml",
+                    imagesUrl = listOf("https://http2.mlstatic.com/D_NQ_NP_2X_661732-MLA82942925465_032025-F.webp"),
+                    price = 23500.0
+                ),
+                quantity = 1
+            ),OrderItem(
+                product = product,
+                quantity = 1
+            ),
+            OrderItem(
+                product = Product(
+                    code = "1234",
+                    name = "Cafetera expresso 200ml",
+                    imagesUrl = listOf("https://http2.mlstatic.com/D_NQ_NP_2X_661732-MLA82942925465_032025-F.webp"),
+                    price = 23500.0
+                ),
+                quantity = 1
+            ),
         ),
         total = 100.0
     )

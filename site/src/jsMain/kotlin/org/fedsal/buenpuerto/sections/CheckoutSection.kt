@@ -9,6 +9,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.varabyte.kobweb.compose.css.Cursor
 import com.varabyte.kobweb.compose.css.FontWeight
+import com.varabyte.kobweb.compose.css.Overflow
 import com.varabyte.kobweb.compose.css.ScrollBehavior
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -36,6 +37,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.margin
 import com.varabyte.kobweb.compose.ui.modifiers.maxHeight
 import com.varabyte.kobweb.compose.ui.modifiers.onClick
 import com.varabyte.kobweb.compose.ui.modifiers.opacity
+import com.varabyte.kobweb.compose.ui.modifiers.overflow
 import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.modifiers.scrollBehavior
 import com.varabyte.kobweb.compose.ui.modifiers.transition
@@ -59,6 +61,7 @@ import org.jetbrains.compose.web.css.LineStyle
 import org.jetbrains.compose.web.css.ms
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
+import org.jetbrains.compose.web.css.vh
 import org.jetbrains.compose.web.dom.Button
 
 @Composable
@@ -104,12 +107,14 @@ fun CheckoutSection(
                     text = "Carrito de compras"
                 )
             }
-            Column(modifier = Modifier.fillMaxSize().padding(20.px)) {
+            Column(modifier = Modifier.fillMaxSize()) {
                 if (products.isEmpty()) {
                     EmptyProducts(modifier = Modifier.fillMaxWidth())
                 } else {
                     ProductColumn(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(leftRight = 20.px, topBottom = 20.px).maxHeight(70.vh)
+                            .overflow { y(Overflow.Scroll) },
                         products = products,
                         onIncrement,
                         onDecrement,
@@ -117,43 +122,45 @@ fun CheckoutSection(
                     )
                 }
                 Spacer()
-                Row(
-                    Modifier.fillMaxWidth().margin { bottom(20.px) },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    SpanText(
-                        modifier = Modifier.fontSize(26.px).fontFamily(FONT_FAMILY)
-                            .fontWeight(FontWeight.Bold).color(Colors.Black),
-                        text = "Total:"
-                    )
-                    Spacer()
-                    SpanText(
-                        modifier = Modifier.fontSize(26.px).fontFamily(FONT_FAMILY)
-                            .color(Colors.Black),
-                        text = "$ ${order.total.formatDecimal()}"
-                    )
-                }
-                Button(
-                    attrs = Modifier
-                        .height(60.px)
-                        .border(width = 0.px)
-                        .borderRadius(r = 10.px)
-                        .backgroundColor(Colors.Black)
-                        .color(Colors.White)
-                        .cursor(Cursor.Pointer)
-                        .fillMaxWidth()
-                        .onClick { onPlaceOrder() }
-                        .toAttrs()
-                ) {
-                    SpanText(
-                        modifier = Modifier
+                Column(modifier = Modifier.fillMaxWidth().padding(20.px)) {
+                    Row(
+                        Modifier.fillMaxWidth().margin { bottom(20.px) },
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        SpanText(
+                            modifier = Modifier.fontSize(26.px).fontFamily(FONT_FAMILY)
+                                .fontWeight(FontWeight.Bold).color(Colors.Black),
+                            text = "Total:"
+                        )
+                        Spacer()
+                        SpanText(
+                            modifier = Modifier.fontSize(26.px).fontFamily(FONT_FAMILY)
+                                .color(Colors.Black),
+                            text = "$ ${order.total.formatDecimal()}"
+                        )
+                    }
+                    Button(
+                        attrs = Modifier
+                            .height(60.px)
+                            .border(width = 0.px)
+                            .borderRadius(r = 10.px)
+                            .backgroundColor(Colors.Black)
+                            .color(Colors.White)
+                            .cursor(Cursor.Pointer)
                             .fillMaxWidth()
-                            .fontFamily(FONT_FAMILY)
-                            .fontSize(16.px)
-                            .fontWeight(FontWeight.Bold)
-                            .color(Colors.White),
-                        text = "Enviar pedido".uppercase()
-                    )
+                            .onClick { onPlaceOrder() }
+                            .toAttrs()
+                    ) {
+                        SpanText(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fontFamily(FONT_FAMILY)
+                                .fontSize(16.px)
+                                .fontWeight(FontWeight.Bold)
+                                .color(Colors.White),
+                            text = "Enviar pedido".uppercase()
+                        )
+                    }
                 }
             }
         }
@@ -206,7 +213,7 @@ fun ProductColumn(
                 onRemoveItem = onRemove
             )
             if (index != products.size - 1) {
-                Box(modifier.height(1.px)
+                Box(Modifier.height(1.px)
                     .fillMaxWidth()
                     .background(Colors.Black)
                     .margin {

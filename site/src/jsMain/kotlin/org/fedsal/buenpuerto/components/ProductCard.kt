@@ -87,7 +87,8 @@ fun ProductCard(
             Spacer()
             Row(
                 Modifier.fillMaxWidth().margin { left(10.px) },
-                horizontalArrangement = Arrangement.Start
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.Bottom
             ) {
                 CounterButton(
                     modifier = Modifier.width(110.px),
@@ -99,7 +100,7 @@ fun ProductCard(
                 SpanText(
                     modifier = Modifier
                         .fontFamily(FONT_FAMILY)
-                        .fontSize(22.px)
+                        .fontSize(18.px)
                         .fontWeight(FontWeight.Bold)
                         .color(Colors.Black),
                     text = "$ ${(product.product.price * product.quantity).formatDecimal()}"
