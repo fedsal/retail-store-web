@@ -30,6 +30,8 @@ kotlin {
             implementation(libs.silk.icons.fa)
             implementation(libs.boostrap)
             implementation(project(":shared"))
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
+            implementation(libs.androidx.lifecycle.runtime.compose)
             // implementation(libs.kobwebx.markdown)
             
         }

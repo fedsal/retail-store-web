@@ -1,5 +1,6 @@
 package org.fedsal.buenpuerto.viewmodel
 
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,8 +14,8 @@ class OrderViewModel(
 ) : ViewModel() {
 
     private val _uiState = mutableStateOf(OrderUiState())
-    val uiState: OrderUiState
-        get() = _uiState.value
+    val uiState: State<OrderUiState>
+        get() = _uiState
 
     private var order = Order()
 
@@ -27,6 +28,16 @@ class OrderViewModel(
             try {
                 order = orderRepository.getOrder()
                 _uiState.value = OrderUiState(order = order)
+            } catch (e: Exception) {
+                onError(e.message.toString())
+            }
+        }
+    }
+
+    fun sendOrder(clientName: String) {
+        viewModelScope.launch {
+            try {
+                //orderRepository.sendOrder(order)
             } catch (e: Exception) {
                 onError(e.message.toString())
             }
@@ -53,17 +64,31 @@ class OrderViewModel(
             val products = order.products
             val productExists = products.any { it.product.code == item.product.code }
 
-            val updatedOrder = if (!productExists) {
-                order.copy(
-                    products = products
-                        .toMutableList()
-                        .apply { removeAll { it.product.code == item.product.code } }
-                )
-            } else {
-                modifyQuantity(item.product.code, -(item.quantity))
-            }
+            try {
+                if (!productExists) {
+                    throw IllegalArgumentException("Product not found in order")
+                }
+                val updatedOrder = modifyQuantity(item.product.code, -(item.quantity))
 
-            updateOrder(updatedOrder)
+                updateOrder(updatedOrder)
+            } catch (e: Exception) {
+                onError(e.message.toString())
+            }
+        }
+    }
+
+    fun deleteItem(item: OrderItem) {
+        val products = order.products
+        val productExists = products.any { it.product.code == item.product.code }
+
+        val updatedOrder = if (!productExists) {
+            order.copy(
+                products = products
+                    .toMutableList()
+                    .apply { removeAll { it.product.code == item.product.code } }
+            )
+        } else {
+            order
         }
     }
 
@@ -91,12 +116,12 @@ class OrderViewModel(
 
     private fun onError(error: String) {
         _uiState.value = OrderUiState(
-            order = uiState.order,
-            errors = uiState.errors?.plus(error)
+            order = uiState.value.order,
+            errors = uiState.value.errors?.plus(error)
         )
     }
 
     fun clearErrors() {
-        _uiState.value = OrderUiState(order = uiState.order)
+        _uiState.value = OrderUiState(order = uiState.value.order)
     }
 }
