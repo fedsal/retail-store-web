@@ -44,9 +44,9 @@ import org.jetbrains.compose.web.css.px
 fun ProductCard(
     modifier: Modifier,
     product: OrderItem,
-    onIncrement: (OrderItem) -> Unit = {},
-    onDecrement: (OrderItem) -> Unit = {},
-    onRemoveItem: (OrderItem) -> Unit = {},
+    onIncrement: (OrderItem) -> Unit,
+    onDecrement: (OrderItem) -> Unit,
+    onRemoveItem: (OrderItem) -> Unit,
 ) {
     Row(
         modifier = modifier.height(80.px).fillMaxWidth(),
@@ -81,7 +81,10 @@ fun ProductCard(
                 Spacer()
                 FaTrashCan(
                     size = IconSize.XL,
-                    modifier = Modifier.color(Colors.Black).margin { left(10.px) }
+                    modifier = Modifier.color(Colors.Black).margin { left(10.px) }.onClick {
+                        console.log("Remove item: $product")
+                        onRemoveItem(product)
+                    }
                 )
             }
             Spacer()

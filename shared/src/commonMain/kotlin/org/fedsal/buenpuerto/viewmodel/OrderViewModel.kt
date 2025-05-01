@@ -1,9 +1,9 @@
 package org.fedsal.buenpuerto.viewmodel
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.fedsal.buenpuerto.data.repository.OrderRepository
 import org.fedsal.buenpuerto.domain.model.Order
@@ -13,8 +13,8 @@ class OrderViewModel(
     private val orderRepository: OrderRepository
 ) : ViewModel() {
 
-    private val _uiState = mutableStateOf(OrderUiState())
-    val uiState: State<OrderUiState>
+    private val _uiState = MutableStateFlow(OrderUiState())
+    val uiState: StateFlow<OrderUiState>
         get() = _uiState
 
     private var order = Order()
@@ -95,9 +95,13 @@ class OrderViewModel(
     private fun updateOrder(order: Order) {
         viewModelScope.launch {
             try {
-                this@OrderViewModel.order = order
-                orderRepository.updateOrder(order)
-                _uiState.value = OrderUiState(order = order)
+                val updatedOrder = order.copy(
+                    total = order.products.sumOf { it.product.price * it.quantity }
+                )
+                this@OrderViewModel.order = updatedOrder
+                orderRepository.updateOrder(updatedOrder)
+                _uiState.value = OrderUiState(order = updatedOrder)
+                console.log("Order updated: $uiState")
             } catch (e: Exception) {
                 onError(e.message.toString())
             }

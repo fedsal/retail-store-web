@@ -1,11 +1,11 @@
 package org.fedsal.buenpuerto.pages
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
@@ -30,7 +30,6 @@ import org.fedsal.buenpuerto.viewmodel.OrderViewModel
 @Page
 @Composable
 fun HomePage() {
-
     var cachedOrder by remember { mutableStateOf(Order()) }
 
     val viewModel = OrderViewModel(
@@ -53,7 +52,7 @@ fun HomePage() {
         )
     )
 
-    val uiState by remember { viewModel.uiState }
+    val uiState = viewModel.uiState.collectAsState()
 
     var menuOpened by remember { mutableStateOf(false) }
     val product = Product(
@@ -78,12 +77,11 @@ fun HomePage() {
                     product = product,
                     quantity = quantity
                 )
-                console.log("Added item")
                 viewModel.addItem(orderItem)
             }
         }
         if (menuOpened) {
-            CheckoutSection(onMenuClosed = { menuOpened = false }, order = uiState.order,
+            CheckoutSection(onMenuClosed = { menuOpened = false }, order = uiState.value.order,
                 onDecrement = { viewModel.removeItem(it) },
                 onIncrement = { viewModel.addItem(it) },
                 onRemove = { viewModel.deleteItem(it) },

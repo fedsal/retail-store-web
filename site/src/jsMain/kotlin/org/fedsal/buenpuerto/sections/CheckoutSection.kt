@@ -73,7 +73,6 @@ fun CheckoutSection(
     onRemove: (OrderItem) -> Unit,
     onPlaceOrder: () -> Unit
 ) {
-    val products = order.products
     val scope = rememberCoroutineScope()
     val breakpoint = rememberBreakpoint()
     var opacity by remember { mutableStateOf(0.percent) }
@@ -108,14 +107,14 @@ fun CheckoutSection(
                 )
             }
             Column(modifier = Modifier.fillMaxSize()) {
-                if (products.isEmpty()) {
+                if (order.products.isEmpty()) {
                     EmptyProducts(modifier = Modifier.fillMaxWidth())
                 } else {
                     ProductColumn(
                         modifier = Modifier.fillMaxWidth()
                             .padding(leftRight = 20.px, topBottom = 20.px).maxHeight(70.vh)
                             .overflow { y(Overflow.Scroll) },
-                        products = products,
+                        products = order.products,
                         onIncrement,
                         onDecrement,
                         onRemove
