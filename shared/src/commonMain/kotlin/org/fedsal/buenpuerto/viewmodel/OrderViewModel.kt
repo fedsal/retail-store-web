@@ -37,7 +37,12 @@ class OrderViewModel(
     fun sendOrder(clientName: String) {
         viewModelScope.launch {
             try {
-                //orderRepository.sendOrder(order)
+                orderRepository.createOrder(order.copy(
+                    clientName = clientName
+                ))
+                orderRepository.getAll().collect {
+                    console.log("Order sent: $it")
+                }
             } catch (e: Exception) {
                 onError(e.message.toString())
             }
@@ -119,6 +124,7 @@ class OrderViewModel(
     )
 
     private fun onError(error: String) {
+        console.log(error)
         _uiState.value = OrderUiState(
             order = uiState.value.order,
             errors = uiState.value.errors?.plus(error)

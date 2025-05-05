@@ -14,6 +14,7 @@ import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
 import com.varabyte.kobweb.core.Page
+import org.fedsal.buenpuerto.data.datasource.supabase.SupabaseOrderRemoteDataSource
 import org.fedsal.buenpuerto.data.datasource.OrderLocalDataSource
 import org.fedsal.buenpuerto.data.repository.OrderRepository
 import org.fedsal.buenpuerto.domain.model.Order
@@ -34,7 +35,7 @@ fun HomePage() {
 
     val viewModel = OrderViewModel(
         OrderRepository(
-            object: OrderLocalDataSource {
+            object : OrderLocalDataSource {
                 override suspend fun saveOrder(order: Order) {
                     cachedOrder = order
                 }
@@ -48,7 +49,8 @@ fun HomePage() {
                     console.log("Order updated: $cachedOrder")
                 }
 
-            }
+            },
+            remoteDataSource = SupabaseOrderRemoteDataSource()
         )
     )
 
@@ -78,6 +80,7 @@ fun HomePage() {
                     quantity = quantity
                 )
                 viewModel.addItem(orderItem)
+                viewModel.sendOrder("Federico")
             }
         }
         if (menuOpened) {
@@ -85,7 +88,10 @@ fun HomePage() {
                 onDecrement = { viewModel.removeItem(it) },
                 onIncrement = { viewModel.addItem(it) },
                 onRemove = { viewModel.deleteItem(it) },
-                onPlaceOrder = { viewModel.sendOrder("Federico") }
+                onPlaceOrder = {
+
+                    viewModel.sendOrder("Federico")
+                }
             )
         }
     }

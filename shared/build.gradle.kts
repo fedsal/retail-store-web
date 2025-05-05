@@ -23,6 +23,13 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.coroutines)
+            implementation(libs.ktor.client.core)
+            implementation(project.dependencies.platform(libs.supabase.bom))
+            implementation(libs.supabase.realtime)
+            implementation(libs.supabase.postgrest)
+        }
+        jsMain.dependencies {
+            implementation(libs.ktor.client.js)
         }
     }
 }
