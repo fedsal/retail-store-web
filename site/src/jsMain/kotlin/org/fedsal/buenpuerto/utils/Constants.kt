@@ -18,4 +18,8 @@ object Res {
         const val IMAGE_BACKGROUND = "#dedede"
         const val HINT_COLOR = "#328FFF"
     }
+
+    object QueryParams {
+        const val PRODUCT_CODE = "productCode"
+    }
 }

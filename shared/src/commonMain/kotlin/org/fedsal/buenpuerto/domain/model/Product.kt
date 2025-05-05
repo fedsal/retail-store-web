@@ -1,9 +1,9 @@
 package org.fedsal.buenpuerto.domain.model
 
 data class Product(
-    val id: Int,
-    val code: String,
-    val name: String,
-    val imagesUrl: List<String>,
-    val price: Double
+    val id: Int = 0,
+    val code: String = "",
+    val name: String = "",
+    val imagesUrl: List<String> = emptyList(),
+    val price: Double = 0.0
 )

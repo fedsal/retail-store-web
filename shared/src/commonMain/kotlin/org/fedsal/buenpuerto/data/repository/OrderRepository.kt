@@ -3,6 +3,7 @@ package org.fedsal.buenpuerto.data.repository
 import org.fedsal.buenpuerto.data.datasource.OrderLocalDataSource
 import org.fedsal.buenpuerto.data.datasource.OrderRemoteDataSource
 import org.fedsal.buenpuerto.domain.model.Order
+import org.fedsal.buenpuerto.domain.model.Product
 
 class OrderRepository(
     private val localDataSource: OrderLocalDataSource,
@@ -14,4 +15,5 @@ class OrderRepository(
     // Remote behaviour
     suspend fun createOrder(order: Order) = remoteDataSource.create(order)
     suspend fun getAll() = remoteDataSource.getAll()
+    suspend fun getProduct(code: String): Product = remoteDataSource.getProduct(code)
 }

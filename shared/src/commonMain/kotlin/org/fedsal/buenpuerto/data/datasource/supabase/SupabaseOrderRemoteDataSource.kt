@@ -15,9 +15,11 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.fedsal.buenpuerto.data.datasource.OrderRemoteDataSource
 import org.fedsal.buenpuerto.data.datasource.supabase.model.SupabaseOrder
+import org.fedsal.buenpuerto.data.datasource.supabase.model.SupabaseProduct
 import org.fedsal.buenpuerto.data.datasource.supabase.model.SupabaseRawOrder
 import org.fedsal.buenpuerto.data.datasource.supabase.model.toDomain
 import org.fedsal.buenpuerto.domain.model.Order
+import org.fedsal.buenpuerto.domain.model.Product
 
 class SupabaseOrderRemoteDataSource : OrderRemoteDataSource {
     private val supabase = createSupabaseClient(SUPABASE_URL, SUPABASE_SECRET) {
@@ -61,6 +63,17 @@ class SupabaseOrderRemoteDataSource : OrderRemoteDataSource {
             }
         ).decodeAs<SupabaseRawOrder>()
         return newOrder.toDomain()
+    }
+
+    override suspend fun getProduct(code: String): Product {
+        val product = supabase.from("productos").select {
+                filter {
+                    eq("codigo", code)
+                }
+            }
+            .decodeList<SupabaseProduct>()
+            .firstOrNull()
+        return product?.toDomain() ?: throw Exception("Product not found")
     }
 
     companion object {

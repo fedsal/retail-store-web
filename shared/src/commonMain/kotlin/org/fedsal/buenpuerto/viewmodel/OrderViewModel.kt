@@ -19,15 +19,18 @@ class OrderViewModel(
 
     private var order = Order()
 
-    init {
-        getOrder()
-    }
-
-    private fun getOrder() {
+    fun initializeData(productCode: String) {
         viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true)
             try {
                 order = orderRepository.getOrder()
-                _uiState.value = OrderUiState(order = order)
+                val product = orderRepository.getProduct(productCode)
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    order = order,
+                    product = product
+                )
+                console.log("Order initialized: ${uiState.value}")
             } catch (e: Exception) {
                 onError(e.message.toString())
             }
@@ -86,11 +89,8 @@ class OrderViewModel(
         val productExists = products.any { it.product.code == item.product.code }
 
         val updatedOrder = if (!productExists) {
-            order.copy(
-                products = products
-                    .toMutableList()
-                    .apply { removeAll { it.product.code == item.product.code } }
-            )
+            order.copy(products = products.toMutableList()
+                .apply { removeAll { it.product.code == item.product.code } })
         } else {
             order
         }
@@ -99,12 +99,11 @@ class OrderViewModel(
     private fun updateOrder(order: Order) {
         viewModelScope.launch {
             try {
-                val updatedOrder = order.copy(
-                    total = order.products.sumOf { it.product.price * it.quantity }
-                )
+                val updatedOrder =
+                    order.copy(total = order.products.sumOf { it.product.price * it.quantity })
                 this@OrderViewModel.order = updatedOrder
                 orderRepository.updateOrder(updatedOrder)
-                _uiState.value = OrderUiState(order = updatedOrder)
+                _uiState.value = _uiState.value.copy(order = updatedOrder)
                 console.log("Order updated: $uiState")
             } catch (e: Exception) {
                 onError(e.message.toString())
@@ -112,21 +111,19 @@ class OrderViewModel(
         }
     }
 
-    private fun modifyQuantity(code: String, quantity: Int): Order = order.copy(
-        products = order.products.map {
+    private fun modifyQuantity(code: String, quantity: Int): Order =
+        order.copy(products = order.products.map {
             if (it.product.code == code) {
                 it.copy(quantity = it.quantity + quantity)
             } else {
                 it
             }
-        }
-    )
+        })
 
     private fun onError(error: String) {
         console.log(error)
-        _uiState.value = OrderUiState(
-            order = uiState.value.order,
-            errors = uiState.value.errors?.plus(error)
+        _uiState.value = _uiState.value.copy(
+            order = uiState.value.order, errors = uiState.value.errors?.plus(error)
         )
     }
 
