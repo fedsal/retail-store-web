@@ -37,12 +37,11 @@ class OrderViewModel(
     fun sendOrder(clientName: String) {
         viewModelScope.launch {
             try {
-                orderRepository.createOrder(order.copy(
-                    clientName = clientName
-                ))
-                orderRepository.getAll().collect {
-                    console.log("Order sent: $it")
-                }
+                orderRepository.createOrder(
+                    order.copy(
+                        clientName = clientName
+                    )
+                )
             } catch (e: Exception) {
                 onError(e.message.toString())
             }

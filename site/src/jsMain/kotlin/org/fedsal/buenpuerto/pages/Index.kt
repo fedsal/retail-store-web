@@ -58,6 +58,7 @@ fun HomePage() {
 
     var menuOpened by remember { mutableStateOf(false) }
     val product = Product(
+        id = 1,
         code = "123",
         name = "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
         imagesUrl = listOf("https://http2.mlstatic.com/D_NQ_NP_2X_661732-MLA82942925465_032025-F.webp", "https://example.com/image2.jpg"),
@@ -80,7 +81,6 @@ fun HomePage() {
                     quantity = quantity
                 )
                 viewModel.addItem(orderItem)
-                viewModel.sendOrder("Federico")
             }
         }
         if (menuOpened) {

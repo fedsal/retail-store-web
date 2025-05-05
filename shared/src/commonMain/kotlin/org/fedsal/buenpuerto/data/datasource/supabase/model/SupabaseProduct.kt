@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SupabaseProduct(
+    val id: Int,
     @SerialName("codigo")
     val code: String,
     @SerialName("nombre")
