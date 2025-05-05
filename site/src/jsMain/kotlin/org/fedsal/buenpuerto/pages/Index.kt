@@ -19,10 +19,9 @@ import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.core.rememberPageContext
-import org.fedsal.buenpuerto.data.datasource.OrderLocalDataSource
+import org.fedsal.buenpuerto.data.OrderLocalDataSourceImpl
 import org.fedsal.buenpuerto.data.datasource.supabase.SupabaseOrderRemoteDataSource
 import org.fedsal.buenpuerto.data.repository.OrderRepository
-import org.fedsal.buenpuerto.domain.model.Order
 import org.fedsal.buenpuerto.domain.model.OrderItem
 import org.fedsal.buenpuerto.sections.CheckoutSection
 import org.fedsal.buenpuerto.sections.FooterSection
@@ -36,25 +35,9 @@ import org.fedsal.buenpuerto.viewmodel.OrderViewModel
 @Page("{productCode}")
 @Composable
 fun HomePage() {
-    var cachedOrder by remember { mutableStateOf(Order()) }
-
     val viewModel = OrderViewModel(
         OrderRepository(
-            object : OrderLocalDataSource {
-                override suspend fun saveOrder(order: Order) {
-                    cachedOrder = order
-                }
-
-                override suspend fun getOrder(): Order {
-                    return cachedOrder
-                }
-
-                override suspend fun updateOrder(order: Order) {
-                    cachedOrder = order
-                    console.log("Order updated: $cachedOrder")
-                }
-
-            },
+            localDataSource = OrderLocalDataSourceImpl(),
             remoteDataSource = SupabaseOrderRemoteDataSource()
         )
     )

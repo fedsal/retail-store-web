@@ -1,5 +1,8 @@
 package org.fedsal.buenpuerto.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Product(
     val id: Int = 0,
     val code: String = "",
