@@ -49,9 +49,12 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(project(":shared"))
             implementation(libs.stdlib)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.ktor.client.cio)
             implementation(libs.kotlinx.coroutines.swing)
         }
     }
