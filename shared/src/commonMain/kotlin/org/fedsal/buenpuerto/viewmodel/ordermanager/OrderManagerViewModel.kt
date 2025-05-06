@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import org.fedsal.buenpuerto.data.repository.OrderRepository
 
@@ -13,6 +14,8 @@ class OrderManagerViewModel(
     private val _uiState = MutableStateFlow(OrderManagerUiState())
     val uiState: StateFlow<OrderManagerUiState> get() = _uiState
 
+    private val query = MutableStateFlow("")
+
     init {
         loadOrders()
     }
@@ -20,7 +23,16 @@ class OrderManagerViewModel(
     private fun loadOrders() = viewModelScope.launch {
         _uiState.value = OrderManagerUiState(isLoading = true)
         try {
-            orderRepository.getAll().collect { orders ->
+            orderRepository.getAll().combine(query) { orders, query ->
+                if (query.isBlank()) {
+                    orders
+                } else {
+                    orders.filter { order ->
+                        order.clientName.contains(query, ignoreCase = true) ||
+                                order.id.contains(query, ignoreCase = true)
+                    }
+                }
+            }.collect { orders ->
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     orders = orders
@@ -41,5 +53,9 @@ class OrderManagerViewModel(
 
     fun clearErrors() {
         _uiState.value = _uiState.value.copy(error = null)
+    }
+
+    fun searchOrders(query: String) {
+        this.query.value = query
     }
 }

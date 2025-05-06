@@ -32,7 +32,7 @@ import org.fedsal.buenpuerto.composables.OrdersList
 import org.fedsal.buenpuerto.domain.model.Order
 
 @Composable
-fun OrdersPage(orders: List<Order>, onClickItem: (Order) -> Unit) {
+fun OrdersPage(orders: List<Order>, onClickItem: (Order) -> Unit, onQueryChanged: (String) -> Unit) {
     var query by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
@@ -52,7 +52,10 @@ fun OrdersPage(orders: List<Order>, onClickItem: (Order) -> Unit) {
             Spacer(modifier = Modifier.weight(1f))
             TextField(
                 value = query,
-                onValueChange = { query = it },
+                onValueChange = {
+                    query = it
+                    onQueryChanged(it)
+                },
                 placeholder = {
                     Text(text = "Buscar")
                 },

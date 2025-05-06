@@ -6,17 +6,13 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -65,7 +61,7 @@ fun App() {
         Surface(modifier = Modifier.background(Color.Black).fillMaxSize(), color = Color.Black) {
             Row(modifier = Modifier.fillMaxSize()) {
                 LeftPanel()
-                AppContent(viewModel)
+                OrdersContent(viewModel)
             }
         }
     }
@@ -73,7 +69,7 @@ fun App() {
 
 
 @Composable
-fun AppContent(viewModel: OrderManagerViewModel) {
+fun OrdersContent(viewModel: OrderManagerViewModel) {
     val uiState = viewModel.uiState.collectAsState()
     var focusedOrder by remember { mutableStateOf<Order?>(null) }
 
@@ -89,7 +85,10 @@ fun AppContent(viewModel: OrderManagerViewModel) {
                 orders = uiState.value.orders,
                 onClickItem = { order ->
                     focusedOrder = order
-                }
+                },
+                onQueryChanged = { query ->
+                    viewModel.searchOrders(query)
+                },
             )
         }
         AnimatedVisibility(
