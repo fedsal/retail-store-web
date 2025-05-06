@@ -1,0 +1,14 @@
+site:
+  title: "TiendaBuenPuerto"
+
+server:
+  files:
+    dev:
+      contentRoot: "build/processedResources/js/main/public"
+      script: "build/kotlin-webpack/js/developmentExecutable/buenpuerto.js"
+      api: "build/libs/buenpuerto.jar"
+    prod:
+      script: "build/kotlin-webpack/js/productionExecutable/buenpuerto.js"
+      siteRoot: ".kobweb/site"
+
+  port: 8080
