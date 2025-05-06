@@ -121,7 +121,6 @@ fun HomePage() {
                     onRemove = { viewModel.deleteItem(it) },
                     onPlaceOrder = {
                         orderPlaced = true
-                        viewModel.sendOrder("Federico")
                     }
                 )
             }
@@ -130,6 +129,7 @@ fun HomePage() {
                     OrderPlacementDialog(
                         modifier = Modifier.align(Alignment.TopCenter).margin { top(60.px) },
                         onContinue = {
+                            console.log("Order enviada al mostrador: $it")
                             viewModel.sendOrder(it)
                         }
                     ) {
@@ -153,12 +153,19 @@ fun OrderPlacementDialog(
         modifier = modifier.background(Colors.White).fillMaxHeight(30.percent).width(90.percent)
             .borderRadius(10.px).padding(30.px)
     ) {
-        Row(Modifier.fillMaxWidth().margin { bottom(20.px) }, verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            Modifier.fillMaxWidth().margin { bottom(20.px) },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             FaXmark(modifier = Modifier.cursor(Cursor.Pointer).margin(right = 20.px).onClick {
                 onDismiss()
             }.color(Colors.Black), size = IconSize.XL)
-            SpanText("Comprar carrito", modifier = Modifier.fillMaxWidth().textAlign(TextAlign.Start).fontWeight(
-                FontWeight.Bold).color(Colors.Black).fontSize(20.px) )
+            SpanText(
+                "Comprar carrito",
+                modifier = Modifier.fillMaxWidth().textAlign(TextAlign.Start).fontWeight(
+                    FontWeight.Bold
+                ).color(Colors.Black).fontSize(20.px)
+            )
         }
         var inputValue by remember { mutableStateOf("") }
         BSInput(
@@ -175,11 +182,14 @@ fun OrderPlacementDialog(
                 .height(50.px)
                 .border(width = 0.px)
                 .borderRadius(r = 10.px)
-                .backgroundColor(Colors.Black)
+                .backgroundColor(if (inputValue.isNotBlank()) Colors.Black else Colors.LightGray)
                 .color(Colors.White)
                 .cursor(Cursor.Pointer)
                 .fillMaxWidth()
-                .onClick { onContinue(inputValue) }
+                .onClick {
+                    if (inputValue.isBlank()) return@onClick
+                    onContinue(inputValue)
+                }
                 .toAttrs()
         ) {
             SpanText(

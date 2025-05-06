@@ -143,11 +143,14 @@ fun CheckoutSection(
                             .height(60.px)
                             .border(width = 0.px)
                             .borderRadius(r = 10.px)
-                            .backgroundColor(Colors.Black)
+                            .backgroundColor(if (order.products.isNotEmpty()) Colors.Black else Colors.LightGray)
                             .color(Colors.White)
                             .cursor(Cursor.Pointer)
                             .fillMaxWidth()
-                            .onClick { onPlaceOrder() }
+                            .onClick {
+                                if (order.products.isEmpty()) return@onClick
+                                onPlaceOrder()
+                            }
                             .toAttrs()
                     ) {
                         SpanText(
@@ -212,13 +215,14 @@ fun ProductColumn(
                 onRemoveItem = onRemove
             )
             if (index != products.size - 1) {
-                Box(Modifier.height(1.px)
-                    .fillMaxWidth()
-                    .background(Colors.Black)
-                    .margin {
-                        bottom(30.px)
-                        top(20.px)
-                    }
+                Box(
+                    Modifier.height(1.px)
+                        .fillMaxWidth()
+                        .background(Colors.Black)
+                        .margin {
+                            bottom(30.px)
+                            top(20.px)
+                        }
                 )
             }
         }
