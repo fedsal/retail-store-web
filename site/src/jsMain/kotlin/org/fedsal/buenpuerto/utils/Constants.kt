@@ -12,6 +12,7 @@ object Res {
 
     object Images {
         const val LOGO = "logo.png"
+        const val PRODUCT_PLACEHOLDER = "product_placeholder.webp"
     }
 
     object Colors {

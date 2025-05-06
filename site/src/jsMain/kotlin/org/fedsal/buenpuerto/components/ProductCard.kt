@@ -53,7 +53,7 @@ fun ProductCard(
         verticalAlignment = Alignment.Top,
     ) {
         Image(
-            src = product.product.imagesUrl.first(),
+            src = product.product.imagesUrl.first().takeIf { it.isNotBlank() } ?: Res.Images.PRODUCT_PLACEHOLDER,
             modifier = Modifier
                 .height(80.px)
                 .width(80.px)

@@ -6,6 +6,7 @@ import com.stevdza.san.kotlinbs.models.CarouselItem
 import com.varabyte.kobweb.compose.css.ObjectFit
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.margin
+import org.fedsal.buenpuerto.utils.Res
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 
@@ -17,7 +18,7 @@ fun ImageCarouselSection(
         modifier = Modifier.margin(all = 0.px),
         items = imageList.map {
             CarouselItem(
-                image = it
+                image = it.takeIf { it.isNotBlank() } ?: Res.Images.PRODUCT_PLACEHOLDER,
             )
         },
         width = 100.percent,
