@@ -76,7 +76,10 @@ fun HomePage() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                HeaderSection(onBagClicked = { menuOpened = true })
+                HeaderSection(
+                    onBagClicked = { menuOpened = true },
+                    itemCount = uiState.value.order.products.size
+                )
                 ImageCarouselSection(uiState.value.product.imagesUrl)
                 ProductTitleSection(uiState.value.product.name)
                 ProductPriceSection(uiState.value.product.price)
