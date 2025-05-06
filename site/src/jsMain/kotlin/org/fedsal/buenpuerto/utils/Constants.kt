@@ -11,7 +11,7 @@ object Res {
     }
 
     object Images {
-        const val LOGO = "favicon.ico"
+        const val LOGO = "logo.png"
     }
 
     object Colors {

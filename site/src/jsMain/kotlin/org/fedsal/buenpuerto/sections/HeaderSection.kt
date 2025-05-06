@@ -25,7 +25,7 @@ fun HeaderSection(onBagClicked: () -> Unit = {}) {
         horizontalArrangement = Arrangement.Start
     ) {
         Image(
-            modifier = Modifier.size(40.px),
+            modifier = Modifier.height(40.px),
             src = Res.Images.LOGO
         )
         Spacer()
