@@ -31,6 +31,7 @@ coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core"
 # KTOR
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 # SUPABASE
 supabase-bom = { group="io.github.jan-tennert.supabase", name="bom", version.ref="supabase" }
 supabase-postgrest = { module="io.github.jan-tennert.supabase:postgrest-kt "}

@@ -2,12 +2,13 @@ package org.fedsal.buenpuerto.data.repository
 
 import org.fedsal.buenpuerto.data.datasource.OrderLocalDataSource
 import org.fedsal.buenpuerto.data.datasource.OrderRemoteDataSource
+import org.fedsal.buenpuerto.data.datasource.supabase.SupabaseOrderRemoteDataSource
 import org.fedsal.buenpuerto.domain.model.Order
 import org.fedsal.buenpuerto.domain.model.Product
 
 class OrderRepository(
     private val localDataSource: OrderLocalDataSource,
-    private val remoteDataSource: OrderRemoteDataSource
+    private val remoteDataSource: OrderRemoteDataSource = SupabaseOrderRemoteDataSource()
 ) {
     suspend fun getOrder(): Order = localDataSource.getOrder()
     suspend fun saveOrder(order: Order) = localDataSource.saveOrder(order)

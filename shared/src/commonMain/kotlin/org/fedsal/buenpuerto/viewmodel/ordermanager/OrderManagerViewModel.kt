@@ -22,6 +22,7 @@ class OrderManagerViewModel(
         try {
             orderRepository.getAll().collect { orders ->
                 _uiState.value = _uiState.value.copy(
+                    isLoading = false,
                     orders = orders
                 )
             }
