@@ -37,68 +37,74 @@ import org.fedsal.buenpuerto.domain.model.Order
 fun OrdersPage(
     orders: List<Order>,
     onClickItem: (Order) -> Unit,
-    onQueryChanged: (String) -> Unit,
-    onRefresh: () -> Unit
 ) {
-    var query by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .padding(20.dp)
             .fillMaxSize()
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                "Pedidos",
-                modifier = Modifier.padding(start = 20.dp, top = 20.dp, bottom = 16.dp),
-                style = TextStyle(
-                    color = Color.Black,
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            )
-            Spacer(modifier = Modifier.size(12.dp))
-            Icon(
-                imageVector = Icons.Rounded.Sync,
-                contentDescription = "Refresh",
-                tint = Color.Black,
-                modifier = Modifier.size(36.dp).padding(top = 8.dp).clickable { onRefresh() }
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            TextField(
-                value = query,
-                onValueChange = {
-                    query = it
-                    onQueryChanged(it)
-                },
-                placeholder = {
-                    Text(text = "Buscar")
-                },
-                modifier = Modifier
-                    .fillMaxWidth(.4f)
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(
-                        color = Color.LightGray,
-                        width = 1.dp,
-                        shape = RoundedCornerShape(8.dp)
-                    ),
-                trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = "Search",
-                        modifier = Modifier.size(24.dp)
-                    )
-                },
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.White,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-                singleLine = true
-            )
-        }
         OrdersList(
             orders = orders,
             onClickItem = onClickItem
+        )
+    }
+}
+
+@Composable
+fun OrdersTopBar(
+    onQueryChanged: (String) -> Unit,
+    onRefresh: () -> Unit
+) {
+    var query by remember { mutableStateOf("") }
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(
+            "Pedidos",
+            modifier = Modifier.padding(start = 20.dp, top = 20.dp, bottom = 16.dp),
+            style = TextStyle(
+                color = Color.Black,
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+        Spacer(modifier = Modifier.size(12.dp))
+        Icon(
+            imageVector = Icons.Rounded.Sync,
+            contentDescription = "Refresh",
+            tint = Color.Black,
+            modifier = Modifier.size(36.dp).padding(top = 8.dp).clickable { onRefresh() }
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        TextField(
+            value = query,
+            onValueChange = {
+                query = it
+                onQueryChanged(it)
+            },
+            placeholder = {
+                Text(text = "Buscar")
+            },
+            modifier = Modifier
+                .fillMaxWidth(.4f)
+                .clip(RoundedCornerShape(8.dp))
+                .border(
+                    color = Color.LightGray,
+                    width = 1.dp,
+                    shape = RoundedCornerShape(8.dp)
+                ),
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "Search",
+                    modifier = Modifier.size(24.dp)
+                )
+            },
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Color.White,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            ),
+            singleLine = true
         )
     }
 }
