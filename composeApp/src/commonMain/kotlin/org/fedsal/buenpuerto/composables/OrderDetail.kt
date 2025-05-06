@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import org.fedsal.buenpuerto.domain.model.Order
 import org.fedsal.buenpuerto.domain.model.OrderItem
@@ -63,7 +64,7 @@ fun OrderDetail(
             contentDescription = "Cerrar",
             modifier = Modifier.clickable { onDismiss() }.size(24.dp)
         )
-        Column(Modifier.padding(20.dp)) {
+        Column(Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp)) {
             Spacer(modifier = Modifier.height(20.dp))
             Row(Modifier.fillMaxWidth()) {
                 Text("Cliente: ${order.clientName}", color = Color.Black)
@@ -73,11 +74,24 @@ fun OrderDetail(
             Spacer(modifier = Modifier.height(10.dp))
             Divider()
             Spacer(modifier = Modifier.height(20.dp))
-            LazyColumn {
+            LazyColumn(Modifier.weight(1f)) {
                 items(order.products) { orderItem ->
                     OrderItemCard(orderItem)
                     Divider()
                 }
+            }
+            Divider()
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 20.dp),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    "Total: $ ${order.total.formatDecimal()}",
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
             }
         }
     }
@@ -88,7 +102,10 @@ fun OrderDetail(
 fun OrderItemCard(orderItem: OrderItem) {
     val clipboardManager = LocalClipboardManager.current
 
-    Row(modifier = Modifier.padding(vertical = 10.dp).height(90.dp).fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier.padding(vertical = 10.dp).height(90.dp).fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         AsyncImage(
             model = orderItem.product.imagesUrl.first(),
             placeholder = painterResource(Res.drawable.product_placeholder),
