@@ -23,6 +23,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.margin
 import com.varabyte.kobweb.compose.ui.modifiers.zIndex
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.core.rememberPageContext
+import org.fedsal.buenpuerto.components.OrderConfirmed
 import org.fedsal.buenpuerto.components.OrderPlacementDialog
 import org.fedsal.buenpuerto.data.OrderLocalDataSourceImpl
 import org.fedsal.buenpuerto.data.datasource.supabase.SupabaseOrderRemoteDataSource
@@ -41,12 +42,14 @@ import org.jetbrains.compose.web.css.px
 @Page("{productCode}")
 @Composable
 fun HomePage() {
-    val viewModel = OrderViewModel(
-        OrderRepository(
-            localDataSource = OrderLocalDataSourceImpl(),
-            remoteDataSource = SupabaseOrderRemoteDataSource()
+    val viewModel = remember {
+        OrderViewModel(
+            OrderRepository(
+                localDataSource = OrderLocalDataSourceImpl(),
+                remoteDataSource = SupabaseOrderRemoteDataSource()
+            )
         )
-    )
+    }
 
     val ctx = rememberPageContext()
     val productCode = ctx.route.params.getValue(Res.QueryParams.PRODUCT_CODE)
@@ -109,6 +112,17 @@ fun HomePage() {
                         orderPlaced = false
                     }
                 }
+            }
+            if (uiState.value.isOrderConfirmed) {
+                OrderConfirmed(
+                    modifier = Modifier.fillMaxSize(),
+                    orderId = uiState.value.order.id,
+                    onDismiss = {
+                        viewModel.clearOrder()
+                        menuOpened = false
+                        orderPlaced = false
+                    }
+                )
             }
         }
     }

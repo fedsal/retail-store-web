@@ -32,6 +32,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.fontFamily
 import com.varabyte.kobweb.compose.ui.modifiers.fontSize
 import com.varabyte.kobweb.compose.ui.modifiers.fontWeight
 import com.varabyte.kobweb.compose.ui.modifiers.height
+import com.varabyte.kobweb.compose.ui.modifiers.leftRight
 import com.varabyte.kobweb.compose.ui.modifiers.lineHeight
 import com.varabyte.kobweb.compose.ui.modifiers.margin
 import com.varabyte.kobweb.compose.ui.modifiers.maxHeight
@@ -108,7 +109,7 @@ fun CheckoutSection(
             }
             Column(modifier = Modifier.fillMaxSize()) {
                 if (order.products.isEmpty()) {
-                    EmptyProducts(modifier = Modifier.fillMaxWidth())
+                    EmptyProducts()
                 } else {
                     ProductColumn(
                         modifier = Modifier.fillMaxWidth()
@@ -173,27 +174,30 @@ fun CheckoutSection(
 fun EmptyProducts(
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier
-            .padding(10.px)
-            .borderRadius(10.px)
-            .border(
-                width = 1.px,
-                color = Color(Res.Colors.HINT_COLOR),
-                style = LineStyle.Solid
-            ),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Image(src = Res.Icons.INFO_CIRCLE_ICON)
-        SpanText(
-            modifier = Modifier.fontFamily(FONT_FAMILY).color(Color(Res.Colors.HINT_COLOR))
-                .fontSize(18.px)
-                .lineHeight(20.px)
-                .maxHeight(40.px)
-                .margin { left(10.px) },
-            text = "El carrito esta vacio"
-        )
+    Box(modifier.fillMaxWidth().padding { leftRight(20.px) }, contentAlignment = Alignment.Center) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.px)
+                .borderRadius(10.px)
+                .border(
+                    width = 1.px,
+                    color = Color(Res.Colors.HINT_COLOR),
+                    style = LineStyle.Solid
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Image(src = Res.Icons.INFO_CIRCLE_ICON)
+            SpanText(
+                modifier = Modifier.fontFamily(FONT_FAMILY).color(Color(Res.Colors.HINT_COLOR))
+                    .fontSize(18.px)
+                    .lineHeight(20.px)
+                    .maxHeight(40.px)
+                    .margin { left(10.px) },
+                text = "El carrito esta vacio"
+            )
+        }
     }
 }
 

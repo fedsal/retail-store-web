@@ -39,10 +39,15 @@ class OrderViewModel(
     fun sendOrder(clientName: String) {
         viewModelScope.launch {
             try {
-                orderRepository.createOrder(
+                val order = orderRepository.createOrder(
                     order.copy(
                         clientName = clientName
                     )
+                )
+                _uiState.value = _uiState.value.copy(
+                    order = order,
+                    isLoading = false,
+                    isOrderConfirmed = true
                 )
             } catch (e: Exception) {
                 onError(e.message.toString())
@@ -137,5 +142,18 @@ class OrderViewModel(
 
     fun clearErrors() {
         _uiState.value = OrderUiState(order = uiState.value.order)
+    }
+
+    fun clearOrder() {
+        viewModelScope.launch {
+            try {
+                val emptyOrder = Order()
+                orderRepository.updateOrder(emptyOrder)
+                _uiState.value = OrderUiState(product = uiState.value.product)
+                order = emptyOrder
+            } catch (e: Exception) {
+                onError(e.message.toString())
+            }
+        }
     }
 }
