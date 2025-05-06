@@ -32,6 +32,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -103,7 +104,7 @@ fun OrderItemCard(orderItem: OrderItem) {
     val clipboardManager = LocalClipboardManager.current
 
     Row(
-        modifier = Modifier.padding(vertical = 10.dp).height(90.dp).fillMaxWidth(),
+        modifier = Modifier.padding(vertical = 10.dp).height(100.dp).fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
@@ -123,12 +124,20 @@ fun OrderItemCard(orderItem: OrderItem) {
                 .padding(10.dp)
                 .fillMaxSize()
         ) {
-            Row(Modifier.fillMaxWidth()) {
-                Text(orderItem.product.name, color = Color.Black, fontWeight = FontWeight.SemiBold)
-                Spacer(modifier = Modifier.weight(1f))
+            Row(Modifier.fillMaxWidth().weight(1f)) {
+                Text(
+                    orderItem.product.name,
+                    color = Color.Black,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.weight(1f),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Spacer(Modifier.width(20.dp))
                 Text("Unidades: ${orderItem.quantity}")
             }
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(10.dp))
             Row(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Código: ${orderItem.product.code}")
