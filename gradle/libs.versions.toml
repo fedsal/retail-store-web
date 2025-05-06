@@ -15,6 +15,7 @@ kotlin-test = "2.1.20"
 runner = "1.5.2"
 core = "1.5.0"
 junit = "1.1.5"
+compose-multiplatform = "1.7.3"
 
 [libraries]
 compose-html-core = { module = "org.jetbrains.compose.html:html-core", version.ref = "jetbrains-compose" }
@@ -55,10 +56,12 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 
 [plugins]
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 kobweb-application = { id = "com.varabyte.kobweb.application", version.ref = "kobweb" }
 kobweb-library = { id = "com.varabyte.kobweb.library", version.ref = "kobweb" }
-kobweb-worker = { id = "com.varabyte.kobweb.worker", version.ref = "kobweb" }
 kobwebx-markdown = { id = "com.varabyte.kobwebx.markdown", version.ref = "kobweb" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
