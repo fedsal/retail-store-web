@@ -39,7 +39,7 @@ import org.fedsal.buenpuerto.utils.Res
 import org.fedsal.buenpuerto.viewmodel.checkout.OrderViewModel
 import org.jetbrains.compose.web.css.px
 
-@Page("{productCode}")
+@Page
 @Composable
 fun HomePage() {
     val viewModel = remember {
@@ -52,10 +52,10 @@ fun HomePage() {
     }
 
     val ctx = rememberPageContext()
-    val productCode = ctx.route.params.getValue(Res.QueryParams.PRODUCT_CODE)
+    val productCode = ctx.route.params[Res.QueryParams.PRODUCT_CODE]
 
     LaunchedEffect(productCode) {
-        viewModel.initializeData(productCode)
+        viewModel.initializeData(productCode?:"")
     }
 
     val uiState = viewModel.uiState.collectAsState()

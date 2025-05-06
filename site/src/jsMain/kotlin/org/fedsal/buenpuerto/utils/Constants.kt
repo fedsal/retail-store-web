@@ -21,6 +21,6 @@ object Res {
     }
 
     object QueryParams {
-        const val PRODUCT_CODE = "productCode"
+        const val PRODUCT_CODE = "codigo"
     }
 }
