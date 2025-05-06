@@ -1,4 +1,4 @@
-package org.fedsal.buenpuerto.viewmodel
+package org.fedsal.buenpuerto.viewmodel.checkout
 
 import org.fedsal.buenpuerto.domain.model.Order
 import org.fedsal.buenpuerto.domain.model.Product

@@ -1,4 +1,4 @@
-package org.fedsal.buenpuerto.viewmodel
+package org.fedsal.buenpuerto.viewmodel.checkout
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,7 +30,6 @@ class OrderViewModel(
                     order = order,
                     product = product
                 )
-                console.log("Order initialized: ${uiState.value}")
             } catch (e: Exception) {
                 onError(e.message.toString())
             }
@@ -104,7 +103,6 @@ class OrderViewModel(
                 this@OrderViewModel.order = updatedOrder
                 orderRepository.updateOrder(updatedOrder)
                 _uiState.value = _uiState.value.copy(order = updatedOrder)
-                console.log("Order updated: $uiState")
             } catch (e: Exception) {
                 onError(e.message.toString())
             }
@@ -121,7 +119,6 @@ class OrderViewModel(
         })
 
     private fun onError(error: String) {
-        console.log(error)
         _uiState.value = _uiState.value.copy(
             order = uiState.value.order, errors = uiState.value.errors?.plus(error)
         )

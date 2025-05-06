@@ -30,7 +30,7 @@ import org.fedsal.buenpuerto.sections.ImageCarouselSection
 import org.fedsal.buenpuerto.sections.ProductPriceSection
 import org.fedsal.buenpuerto.sections.ProductTitleSection
 import org.fedsal.buenpuerto.utils.Res
-import org.fedsal.buenpuerto.viewmodel.OrderViewModel
+import org.fedsal.buenpuerto.viewmodel.checkout.OrderViewModel
 
 @Page("{productCode}")
 @Composable
