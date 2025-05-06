@@ -1,6 +1,7 @@
 package org.fedsal.buenpuerto.pages
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +16,8 @@ import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,7 +35,12 @@ import org.fedsal.buenpuerto.composables.OrdersList
 import org.fedsal.buenpuerto.domain.model.Order
 
 @Composable
-fun OrdersPage(orders: List<Order>, onClickItem: (Order) -> Unit, onQueryChanged: (String) -> Unit) {
+fun OrdersPage(
+    orders: List<Order>,
+    onClickItem: (Order) -> Unit,
+    onQueryChanged: (String) -> Unit,
+    onRefresh: () -> Unit
+) {
     var query by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
@@ -48,6 +56,13 @@ fun OrdersPage(orders: List<Order>, onClickItem: (Order) -> Unit, onQueryChanged
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold
                 )
+            )
+            Spacer(modifier = Modifier.size(12.dp))
+            Icon(
+                imageVector = Icons.Rounded.Sync,
+                contentDescription = "Refresh",
+                tint = Color.Black,
+                modifier = Modifier.size(36.dp).padding(top = 8.dp).clickable { onRefresh() }
             )
             Spacer(modifier = Modifier.weight(1f))
             TextField(

@@ -89,6 +89,9 @@ fun OrdersContent(viewModel: OrderManagerViewModel) {
                 onQueryChanged = { query ->
                     viewModel.searchOrders(query)
                 },
+                onRefresh = {
+                    viewModel.refresh()
+                }
             )
         }
         AnimatedVisibility(
