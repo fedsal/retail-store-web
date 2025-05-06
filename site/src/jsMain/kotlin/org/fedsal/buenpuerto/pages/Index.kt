@@ -80,11 +80,10 @@ fun HomePage() {
             }
             if (menuOpened) {
                 CheckoutSection(onMenuClosed = { menuOpened = false }, order = uiState.value.order,
-                    onDecrement = { viewModel.removeItem(it) },
-                    onIncrement = { viewModel.addItem(it) },
+                    onDecrement = { viewModel.removeItem(it.copy(quantity = 1)) },
+                    onIncrement = { viewModel.addItem(it.copy(quantity = 1)) },
                     onRemove = { viewModel.deleteItem(it) },
                     onPlaceOrder = {
-
                         viewModel.sendOrder("Federico")
                     }
                 )

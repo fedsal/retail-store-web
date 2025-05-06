@@ -87,12 +87,14 @@ class OrderViewModel(
         val products = order.products
         val productExists = products.any { it.product.code == item.product.code }
 
-        val updatedOrder = if (!productExists) {
-            order.copy(products = products.toMutableList()
-                .apply { removeAll { it.product.code == item.product.code } })
+        val updatedOrder = if (productExists) {
+            order.copy(
+                products = products.toMutableList()
+                    .apply { removeAll { it.product.code == item.product.code } })
         } else {
             order
         }
+        updateOrder(updatedOrder)
     }
 
     private fun updateOrder(order: Order) {
@@ -109,14 +111,23 @@ class OrderViewModel(
         }
     }
 
-    private fun modifyQuantity(code: String, quantity: Int): Order =
-        order.copy(products = order.products.map {
-            if (it.product.code == code) {
-                it.copy(quantity = it.quantity + quantity)
-            } else {
-                it
-            }
-        })
+    private fun modifyQuantity(code: String, quantity: Int): Order {
+        return if ((order.products.find { it.product.code == code }?.quantity
+                ?: 0) + quantity <= 0
+        ) {
+            return order.copy(
+                products = order.products.toMutableList()
+                    .apply { removeAll { it.product.code == code } })
+        } else {
+            order.copy(products = order.products.map {
+                if (it.product.code == code) {
+                    it.copy(quantity = it.quantity + quantity)
+                } else {
+                    it
+                }
+            })
+        }
+    }
 
     private fun onError(error: String) {
         _uiState.value = _uiState.value.copy(

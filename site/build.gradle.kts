@@ -13,6 +13,7 @@ version = "1.0-SNAPSHOT"
 kobweb {
     app {
         index {
+            globals.set(mapOf("title" to "Tienda Buen Puerto"))
             description.set("Powered by Kobweb")
         }
     }

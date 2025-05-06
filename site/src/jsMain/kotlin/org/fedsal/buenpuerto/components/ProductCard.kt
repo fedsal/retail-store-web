@@ -82,7 +82,6 @@ fun ProductCard(
                 FaTrashCan(
                     size = IconSize.XL,
                     modifier = Modifier.color(Colors.Black).margin { left(10.px) }.onClick {
-                        console.log("Remove item: $product")
                         onRemoveItem(product)
                     }
                 )
