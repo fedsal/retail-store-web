@@ -2,6 +2,7 @@ package org.fedsal.buenpuerto.sections
 
 import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.css.FontWeight
+import com.varabyte.kobweb.compose.css.UserSelect
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.margin
 import com.varabyte.kobweb.compose.ui.modifiers.onClick
 import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.compose.ui.modifiers.size
+import com.varabyte.kobweb.compose.ui.modifiers.userSelect
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.components.text.SpanText
 import org.fedsal.buenpuerto.utils.Res
@@ -44,8 +46,12 @@ fun HeaderSection(onBagClicked: () -> Unit = {}, itemCount: Int) {
             if (itemCount > 0) {
                 SpanText(
                     itemCount.toString(),
-                    modifier = Modifier.fontSize(12.px).fontWeight(FontWeight.SemiBold)
-                        .color(Colors.White).margin(top = 8.px)
+                    modifier = Modifier
+                        .fontSize(12.px)
+                        .fontWeight(FontWeight.SemiBold)
+                        .color(Colors.White)
+                        .userSelect(UserSelect.None)
+                        .margin(top = 8.px)
                 )
             }
         }
