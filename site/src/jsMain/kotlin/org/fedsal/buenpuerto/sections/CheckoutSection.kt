@@ -83,7 +83,7 @@ fun CheckoutSection(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().zIndex(2).opacity(opacity).backgroundColor(Colors.Red)
+        modifier = Modifier.fillMaxSize().zIndex(5).opacity(opacity).backgroundColor(Colors.Red)
             .transition(Transition.of(property = "opacity", duration = 500.ms))
     ) {
         Column(
